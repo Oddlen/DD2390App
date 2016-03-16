@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.RollbackException;
@@ -50,32 +52,41 @@ public class RecruitmentBean implements Serializable
     
     public void addCompany()
     {
+          FacesMessage msg;
         try
         {
             companyController.addCompany(newCompanyName);
-            System.out.println(newCompanyName + " added to database");
+           // System.out.println(newCompanyName + " added to database");
             companyList = companyController.getAllCompanies();
             companyName = newCompanyName;
             hidden = true;
+            
+            
+        msg = new FacesMessage("Succes", "Company "+newCompanyName+ " added to database!");
         }
         catch (Exception e)
         {
-         //  e.printStackTrace();
+        
+        msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "error occured!");
         }
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
     }
     
     public void addPosition(){
+          FacesMessage msg;
         try
         {
             positionController.addPosition(companyName, positionName, description);
             System.out.println(positionName + " added to database");
+            msg = new FacesMessage("Succes", "Position "+positionName+ " added to database!");
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "error occured!");
         }
+        FacesContext.getCurrentInstance().addMessage(null, msg); 
     }
-    
+  
     public void onCompanyChange(){
         hidden = !companyName.equals("add new");
     }

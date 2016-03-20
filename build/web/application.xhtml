@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Recruitment Page</title>
+    </h:head>
+    <h:body>
+        
+    <p:panelGrid columns="2" style="width:80%" >
+    <p:column  rowspan="2" style="width:70%">
+    <h:form>
+        <p:growl id="msg" showDetail="true" escape="false" />
+
+        <p:pickList converter="entityConverter" id="pickList" value="#{Application.positions}" var="item" 
+        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" 
+        itemLabel="#{item.position}"  itemValue="#{item}" >
+        <p:ajax event="select" listener="#{Application.onSelect}" update="desc" />
+        <f:facet name="sourceCaption"> Company  -  Position </f:facet>
+        <f:facet name="targetCaption"> Company  -  Position </f:facet>
+        
+            <p:column style="width:50%">
+                <h:outputText value="#{item.company.name}"  />
+            </p:column>
+ 
+            <p:column style="width:50%;">
+                <h:outputText value="#{item.position}" />
+            </p:column>
+        
+      </p:pickList>  
+        <p:commandButton value="Submit"  actionListener="#{Application.addApplication}" update="status" />
+
+
+    </h:form>
+        
+    <p:panel id="desc" header="Position description" style="margin-bottom:20px" >
+        <h:outputText value="#{Application.description}" />
+    </p:panel>
+            
+    </p:column>
+    <p:column>
+        <p:dataTable var="appl" value="#{Application.applicationsByUser}" id="status">
+         
+        <f:facet name="header">
+           Status of applications
+        </f:facet>
+            <p:column headerText="Company">
+                <h:outputText value="#{appl.positionID.company.name}" />
+            </p:column>
+
+            <p:column headerText="Position">
+                <h:outputText value="#{appl.positionID.position}" />
+            </p:column>
+
+            <p:column headerText="Status">
+                <h:outputText value="#{appl.status.name}" />
+            </p:column>
+        </p:dataTable>
+    </p:column>
+    </p:panelGrid>    
+    </h:body>
+</html>
+

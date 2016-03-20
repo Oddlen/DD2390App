@@ -37,7 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Position.findAll", query = "SELECT p FROM Position p"),
     @NamedQuery(name = "Position.findById", query = "SELECT p FROM Position p WHERE p.id = :id"),
     @NamedQuery(name = "Position.findByPosition", query = "SELECT p FROM Position p WHERE p.position = :position"),
-    @NamedQuery(name = "Position.findByDescription", query = "SELECT p FROM Position p WHERE p.description = :description")})
+    @NamedQuery(name = "Position.findByDescription", query = "SELECT p FROM Position p WHERE p.description = :description"),
+    @NamedQuery(name = "Position.findUnApliedBy", query = "SELECT p FROM Position p WHERE p.id not in (\"SELECT a:id FROM Application a WHERE a.username = :username\")"),
+    @NamedQuery(name = "Position.findApliedBy", query = "SELECT p FROM Position p WHERE p.id in (\"SELECT a:id FROM Application a WHERE a.username = :username\")")})
+
 public class Position implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

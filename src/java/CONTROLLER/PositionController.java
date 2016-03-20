@@ -48,9 +48,8 @@ public class PositionController
         return positionModel.getPosition(ID);
     }
      
-    public List<String> getAllPositions()
+    public List<Position> getAllPositions()
     {
-       //TODO create
-        return null;
+        return positionModel.getAllPositions();
     }
 }

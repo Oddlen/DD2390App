@@ -30,8 +30,18 @@ Position entity = new Position();
     
       public List<Position> getAllPositions()
     {
-        List<Position> results = em.createNamedQuery("Company.findAll").getResultList();
+        List<Position> results = em.createNamedQuery("Position.findAll").getResultList();
         return results;
     }
     
+        public List<Position> getUnAppliedPositions(String name)
+    {
+        List<Position> results = em.createNamedQuery("Position.findUnApliedBy").setParameter("username", name).getResultList();
+        return results;
+    }
+        public List<Position> getAppliedPositions(String name)
+    {
+        List<Position> results = em.createNamedQuery("Position.findApliedBy").setParameter("username", name).getResultList();
+        return results;
+    }
 }

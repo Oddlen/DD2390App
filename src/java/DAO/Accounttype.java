@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "accounttype")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Accounttype_1.findAll", query = "SELECT a FROM Accounttype_1 a"),
-    @NamedQuery(name = "Accounttype_1.findByType", query = "SELECT a FROM Accounttype_1 a WHERE a.type = :type")})
+    @NamedQuery(name = "Accounttype.findAll", query = "SELECT a FROM Accounttype a"),
+    @NamedQuery(name = "Accounttype.findByType", query = "SELECT a FROM Accounttype a WHERE a.type = :type")})
 public class Accounttype implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

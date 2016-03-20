@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
     @NamedQuery(name = "Company.findByName", query = "SELECT c FROM Company c WHERE c.name = :name")})
+
 public class Company implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

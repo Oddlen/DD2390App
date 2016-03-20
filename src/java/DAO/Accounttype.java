@@ -13,8 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -29,9 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "accounttype")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Accounttype_1.findAll", query = "SELECT a FROM Accounttype_1 a"),
-    @NamedQuery(name = "Accounttype_1.findByType", query = "SELECT a FROM Accounttype_1 a WHERE a.type = :type")})
 public class Accounttype implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,11 +80,5 @@ public class Accounttype implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "DAO.Accounttype_1[ type=" + type + " ]";
-    }
-    
+    }   
 }

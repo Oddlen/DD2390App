@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/web/accessrestricted.xhtml</file>
+            <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/src/java/DAO/User.java</file>
+            <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/web/login.xhtml</file>
+            <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/web/loginerror.xhtml</file>
+            <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/web/newaccount.xhtml</file>
             <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/src/java/VIEW/NewUserBean.java</file>
             <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/src/java/MODEL/UserModel.java</file>
+            <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/web/loggedin/myprofile.xhtml</file>
             <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/web/index.xhtml</file>
             <file>file:/C:/Users/Wilhelm/Google%20Drive/Spar/NetBeansProjects/DD2390App/src/java/CONTROLLER/UserController.java</file>
         </group>

@@ -7,10 +7,11 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <h:head>
-        <title>Start page</title>
+        <title>Access Denied</title>
     </h:head>
     <h:body>
-        <h:link value="Go to my profile" outcome="loggedin/myprofile" />
+        <h:outputLabel value="You do not have permission to enter this location. Login of ask admin for permission." />
+        <p:spacer width="100" height="10" />
+        <h:link value="Go to home page" outcome="index" />
     </h:body>
 </html>
-

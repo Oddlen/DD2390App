@@ -9,48 +9,41 @@ package DAO;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Haarhus
  */
-@Entity
-@Table(name = "competence")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Competence.findAll", query = "SELECT c FROM Competence c"),
-    @NamedQuery(name = "Competence.findByCompetenceName", query = "SELECT c FROM Competence c WHERE c.competenceName = :competenceName"),
-    @NamedQuery(name = "Competence.findByDescription", query = "SELECT c FROM Competence c WHERE c.description = :description")})
-public class Competence implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
+@Embeddable
+public class CompetenceprofilePK implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "Username")
+    private String username;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "CompetenceName")
     private String competenceName;
-    @Size(max = 255)
-    @Column(name = "Description")
-    private String description;
 
-    public Competence() {
+    public CompetenceprofilePK() {
     }
 
-    public Competence(String competenceName) {
+    public CompetenceprofilePK(String username, String competenceName) {
+        this.username = username;
         this.competenceName = competenceName;
     }
-    
-    public Competence(String competenceName,String description) {
-        this.competenceName = competenceName;
-         this.description = description;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getCompetenceName() {
@@ -61,17 +54,10 @@ public class Competence implements Serializable {
         this.competenceName = competenceName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
+        hash += (username != null ? username.hashCode() : 0);
         hash += (competenceName != null ? competenceName.hashCode() : 0);
         return hash;
     }
@@ -79,10 +65,13 @@ public class Competence implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Competence)) {
+        if (!(object instanceof CompetenceprofilePK)) {
             return false;
         }
-        Competence other = (Competence) object;
+        CompetenceprofilePK other = (CompetenceprofilePK) object;
+        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
+            return false;
+        }
         if ((this.competenceName == null && other.competenceName != null) || (this.competenceName != null && !this.competenceName.equals(other.competenceName))) {
             return false;
         }
@@ -91,7 +80,7 @@ public class Competence implements Serializable {
 
     @Override
     public String toString() {
-        return "DAO.Competence[ competenceName=" + competenceName + " ]";
+        return "DAO.CompetenceprofilePK[ username=" + username + ", competenceName=" + competenceName + " ]";
     }
     
 }

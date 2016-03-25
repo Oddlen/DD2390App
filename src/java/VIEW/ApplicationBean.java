@@ -24,7 +24,7 @@ public class ApplicationBean implements Serializable
 
 
 
-    private String user = "Admin";
+    private String user = "hello";
     private String company;
     private String status;
     private String position;

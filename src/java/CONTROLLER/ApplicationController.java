@@ -2,6 +2,7 @@ package CONTROLLER;
 
 import DAO.*;
 import MODEL.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
@@ -62,9 +63,28 @@ public class ApplicationController
         return applicationModel.getApplicationsByUser(user);
     }
     
+    public List<Application> getPendingApplicationsByPosition(int positionID)
+    {
+        Position position = positionController.getPosition(positionID);
+        Status pending = statusController.getStatus("Pending");
+        return applicationModel.getPendingApplicationsByPosition(pending, position);
+    }
+    
         public int deleteApplicationsByUser(String userName)
     {
         User user = userController.getUser(userName);
         return applicationModel.deleteApplicationsByUser(user);
+    }
+
+    public void accept(Application application) {
+        Status status = statusController.getStatus("Accepted");
+        applicationModel.setStatus(application, status);
+        application = null;
+    }
+
+    public void reject(Application application) {
+        Status status = statusController.getStatus("Rejected");
+        applicationModel.setStatus(application, status);
+           application = null;
     }
 }

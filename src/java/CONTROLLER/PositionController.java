@@ -2,7 +2,6 @@ package CONTROLLER;
 
 import DAO.*;
 import MODEL.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
@@ -51,5 +50,11 @@ public class PositionController
     public List<Position> getAllPositions()
     {
         return positionModel.getAllPositions();
+    }
+    
+    public List<Position> getCompanyPositions(String name)
+    {
+        Company company = companyController.getCompany(name);
+        return positionModel.getCompanyPositions(company);
     }
 }

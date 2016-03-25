@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a"),
     @NamedQuery(name = "Application.findById", query = "SELECT a FROM Application a WHERE a.id = :id"),
+    @NamedQuery(name = "Application.findByPositionId", query = "SELECT a FROM Application a WHERE a.positionID = :positionID"),
+    @NamedQuery(name = "Application.findPendingByPositionId", query = "SELECT a FROM Application a WHERE a.positionID = :positionID AND a.status = :status"),
     @NamedQuery(name = "Application.findByName", query = "SELECT a FROM Application a WHERE a.username = :username"),
     @NamedQuery(name = "Application.deleteByName", query = "DELETE FROM Application a WHERE a.username = :username")})
 public class Application implements Serializable {

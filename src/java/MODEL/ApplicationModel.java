@@ -39,10 +39,26 @@ Application entity = new Application();
         List<Application> results = em.createNamedQuery("Application.findByName").setParameter("username", user).getResultList();
         return results;
     }
+        public List<Application> getApplicationsByPosition(Position position)
+    {
+        List<Application> results = em.createNamedQuery("Application.findByPositionId").setParameter("positionID", position).getResultList();
+        return results;
+    }
       
       public int deleteApplicationsByUser(User user)
     {
         int results = em.createNamedQuery("Application.deleteByName").setParameter("username", user).executeUpdate();
+        return results;
+    }
+
+    public void setStatus(Application application, Status status) {
+        application.setStatus(status);
+        em.merge(application);
+    }
+
+    public List<Application> getPendingApplicationsByPosition(Status status, Position position) {
+        
+        List<Application> results = em.createNamedQuery("Application.findPendingByPositionId").setParameter("positionID", position).setParameter("status", status).getResultList();
         return results;
     }
     

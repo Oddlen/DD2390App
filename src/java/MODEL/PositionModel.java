@@ -44,4 +44,9 @@ Position entity = new Position();
         List<Position> results = em.createNamedQuery("Position.findApliedBy").setParameter("username", name).getResultList();
         return results;
     }
+        public List<Position> getCompanyPositions(Company company)
+    {
+        List<Position> results = em.createNamedQuery("Position.findByCompany").setParameter("company", company).getResultList();
+        return results;
+    }
 }

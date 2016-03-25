@@ -7,17 +7,14 @@
 package DAO;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,39 +27,40 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Competenceprofile.findAll", query = "SELECT c FROM Competenceprofile c"),
-    @NamedQuery(name = "Competenceprofile.findByUsername", query = "SELECT c FROM Competenceprofile c WHERE c.username = :username"),
-    @NamedQuery(name = "Competenceprofile.findByComment", query = "SELECT c FROM Competenceprofile c WHERE c.comment = :comment")})
+    @NamedQuery(name = "Competenceprofile.findByUsername", query = "SELECT c FROM Competenceprofile c WHERE c.competenceprofilePK.username = :username"),
+    @NamedQuery(name = "Competenceprofile.findByComment", query = "SELECT c FROM Competenceprofile c WHERE c.comment = :comment"),
+    @NamedQuery(name = "Competenceprofile.findByCompetenceName", query = "SELECT c FROM Competenceprofile c WHERE c.competenceprofilePK.competenceName = :competenceName")})
 public class Competenceprofile implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "Username")
-    private String username;
-    @Size(max = 45)
+    @EmbeddedId
+    protected CompetenceprofilePK competenceprofilePK;
+    @Size(max = 255)
     @Column(name = "Comment")
     private String comment;
-    @JoinColumn(name = "CompetenceName", referencedColumnName = "CompetenceName")
+    @JoinColumn(name = "CompetenceName", referencedColumnName = "CompetenceName", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Competence competenceName;
+    private Competence competence;
     @JoinColumn(name = "Username", referencedColumnName = "Username", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private User user;
 
     public Competenceprofile() {
     }
 
-    public Competenceprofile(String username) {
-        this.username = username;
+    public Competenceprofile(CompetenceprofilePK competenceprofilePK) {
+        this.competenceprofilePK = competenceprofilePK;
     }
 
-    public String getUsername() {
-        return username;
+    public Competenceprofile(String username, String competenceName) {
+        this.competenceprofilePK = new CompetenceprofilePK(username, competenceName);
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public CompetenceprofilePK getCompetenceprofilePK() {
+        return competenceprofilePK;
+    }
+
+    public void setCompetenceprofilePK(CompetenceprofilePK competenceprofilePK) {
+        this.competenceprofilePK = competenceprofilePK;
     }
 
     public String getComment() {
@@ -73,12 +71,12 @@ public class Competenceprofile implements Serializable {
         this.comment = comment;
     }
 
-    public Competence getCompetenceName() {
-        return competenceName;
+    public Competence getCompetence() {
+        return competence;
     }
 
-    public void setCompetenceName(Competence competenceName) {
-        this.competenceName = competenceName;
+    public void setCompetence(Competence competence) {
+        this.competence = competence;
     }
 
     public User getUser() {
@@ -92,7 +90,7 @@ public class Competenceprofile implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (username != null ? username.hashCode() : 0);
+        hash += (competenceprofilePK != null ? competenceprofilePK.hashCode() : 0);
         return hash;
     }
 
@@ -103,7 +101,7 @@ public class Competenceprofile implements Serializable {
             return false;
         }
         Competenceprofile other = (Competenceprofile) object;
-        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
+        if ((this.competenceprofilePK == null && other.competenceprofilePK != null) || (this.competenceprofilePK != null && !this.competenceprofilePK.equals(other.competenceprofilePK))) {
             return false;
         }
         return true;
@@ -111,7 +109,7 @@ public class Competenceprofile implements Serializable {
 
     @Override
     public String toString() {
-        return "DAO.Competenceprofile[ username=" + username + " ]";
+        return "DAO.Competenceprofile[ competenceprofilePK=" + competenceprofilePK + " ]";
     }
     
 }

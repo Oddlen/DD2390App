@@ -13,6 +13,7 @@ import java.util.List;
 public class UserModel
 {
 
+User entity = new User();
     @PersistenceContext(unitName = "DD2390AppPU")
     private EntityManager em;
 
@@ -45,14 +46,8 @@ public class UserModel
         }
     }
     
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public User getUser(String name) throws RollbackException
-    {
-       List list = em.createQuery("SELECT u FROM User u WHERE u.username LIKE :name").setParameter("name", name).getResultList();
-       if (list.isEmpty())
-       {
-           return null;
-       }
-       return (User) list.get(0);
+    public User getUser(String Name){
+        User user = em.find(entity.getClass(), Name);
+        return user;
     }
 }

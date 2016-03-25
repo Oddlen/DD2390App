@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "user")
 @XmlRootElement
 public class User implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Collection<Competenceprofile> competenceprofileCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -122,5 +124,14 @@ public class User implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @XmlTransient
+    public Collection<Competenceprofile> getCompetenceprofileCollection() {
+        return competenceprofileCollection;
+    }
+
+    public void setCompetenceprofileCollection(Collection<Competenceprofile> competenceprofileCollection) {
+        this.competenceprofileCollection = competenceprofileCollection;
     }
 }

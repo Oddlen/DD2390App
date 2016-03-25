@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Competence profile Page</title>
+    </h:head>
+    <h:body>
+    <h:form id="form">
+            <p:panel header="Application handling" style="margin-bottom:10px;">
+
+                <p:tree value="#{applicationhandler.root}" var="node" dynamic="true" selectionMode="single" selection="#{applicationhandler.selected}" >
+                      <p:ajax event="select" update="form" listener="#{applicationhandler.onNodeSelect}" />
+                    <p:treeNode>
+                        <h:outputText value="#{node}" />
+                    </p:treeNode>
+                 </p:tree>
+
+            </p:panel>
+            <panel>
+                <p:dataTable var="comp" value="#{applicationhandler.competenceProfile}">
+
+                    <f:facet name="header">                  
+                       <h:outputText value=" Competence profile" />
+                    </f:facet>
+                    <p:column headerText="Competence">
+                        <h:outputText value="#{comp.competenceprofilePK.competenceName}" />
+                    </p:column>
+
+                    <p:column headerText="Description">
+                        <h:outputText value="#{comp.comment}" />
+                    </p:column>
+                </p:dataTable>
+
+                 <p:commandButton value="Accept"  actionListener="#{applicationhandler.accept}" update="@form" icon="ui-icon-check" />
+                 <p:commandButton value="Reject"  actionListener="#{applicationhandler.reject}" update="@form" icon="ui-icon-check" />
+            </panel>
+    </h:form>
+    </h:body>
+</html>
+

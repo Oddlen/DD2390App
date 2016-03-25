@@ -40,4 +40,10 @@ public class UserController
         }
         return new Response("System error, try again later", false);
     }
+    
+        
+    public User getUser(String username){
+        return userModel.getUser(username);
+        
+    }
 }

@@ -1,7 +1,6 @@
 package VIEW;
 
-import CONTROLLER.CompanyController;
-import CONTROLLER.PositionController;
+import CONTROLLER.RecruitmentController;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -41,23 +40,21 @@ public class RecruitmentBean implements Serializable
     {        
       
         System.out.println("Recruitment bean Working");
-        companyList = companyController.getAllCompanies();
+        companyList = positionController.getAllCompanies();
         System.out.println("length "+companyList.size());
     }
 
     @Inject
-    private CompanyController companyController;
-    @Inject
-    private PositionController positionController;
+    private RecruitmentController positionController;
     
     public void addCompany()
     {
           FacesMessage msg;
         try
         {
-            companyController.addCompany(newCompanyName);
+            positionController.addCompany(newCompanyName);
            // System.out.println(newCompanyName + " added to database");
-            companyList = companyController.getAllCompanies();
+            companyList = positionController.getAllCompanies();
             companyName = newCompanyName;
             hidden = true;
             

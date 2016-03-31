@@ -1,6 +1,6 @@
 package VIEW;
 
-import CONTROLLER.UserController;
+import CONTROLLER.ApplicationController;
 import DTO.Response;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -27,13 +27,13 @@ public class NewUserBean implements Serializable
     }
 
     @Inject
-    private UserController userController;
+    private ApplicationController applicationController;
 
     public void addUser()
     {
         try
         {
-            Response response = userController.addUser(name, password);
+            Response response = applicationController.addUser(name, password);
             System.out.println(name + " added to database");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(response.getMessage()));
         }

@@ -1,6 +1,5 @@
 package VIEW;
 
-import CONTROLLER.CompetenceController;
 import CONTROLLER.CompetenceProfileController;
 import DAO.Competence;
 import DAO.Competenceprofile;
@@ -21,9 +20,6 @@ public class CompetenceBean implements Serializable
 
     List<Competence> competenceList;
     List<Competenceprofile> competenceProfile;
-
-
-
     private String competenceName;
     private String newCompetenceName;
     private String description;
@@ -33,27 +29,16 @@ public class CompetenceBean implements Serializable
     
     private boolean hidden = true;
 
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
-
     @PostConstruct
     public void startup()
     {        
       
         System.out.println("Recruitment bean Working");
-        competenceList = competenceController.getAllCompetences();
+        competenceList = competenceProfileController.getAllCompetences();
         System.out.println("length "+competenceList.size());
         
         competenceProfile = competenceProfileController.getAllCompetenceprofilesByUser(username);
     }
-
-    @Inject
-    private CompetenceController competenceController;
     @Inject
     private CompetenceProfileController competenceProfileController;
     
@@ -62,9 +47,9 @@ public class CompetenceBean implements Serializable
           FacesMessage msg;
         try
         {
-            competenceController.addCompetence(newCompetenceName, description);
+            competenceProfileController.addCompetence(newCompetenceName, description);
            // System.out.println(newCompanyName + " added to database");
-            competenceList =  competenceController.getAllCompetences();
+            competenceList =  competenceProfileController.getAllCompetences();
             competenceName = newCompetenceName;
             hidden = true;
             
@@ -141,6 +126,14 @@ public class CompetenceBean implements Serializable
     public void setComment(String comment) {
         this.comment = comment;
     }
+    
+    public boolean isHidden() {
+        return hidden;
+    }
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
     
     public List<Competenceprofile> getCompetenceProfile() {
         return competenceProfile;

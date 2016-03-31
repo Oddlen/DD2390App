@@ -1,9 +1,8 @@
 package VIEW;
 
 import CONTROLLER.ApplicationController;
-import CONTROLLER.CompanyController;
 import CONTROLLER.CompetenceProfileController;
-import CONTROLLER.PositionController;
+import CONTROLLER.RecruitmentController;
 import DAO.Application;
 import DAO.Company;
 import DAO.Competenceprofile;
@@ -38,7 +37,7 @@ public class ApplicationHandlingBean implements Serializable
     @PostConstruct
     public void startup()
     {        
-        companies = companyController.getAllCompanies();
+        companies = positionController.getAllCompanies();
         
         root = new DefaultTreeNode("Root", null);
         
@@ -80,9 +79,7 @@ public class ApplicationHandlingBean implements Serializable
     @Inject
     private ApplicationController applicationController;
     @Inject
-    private PositionController positionController;
-    @Inject
-    private CompanyController companyController;
+    private RecruitmentController positionController;
     @Inject
     private CompetenceProfileController competenceProfileController;
     
@@ -107,7 +104,6 @@ public class ApplicationHandlingBean implements Serializable
     }
      
     public void onNodeSelect(){
-        System.out.println("got clciked");
         if(selected.isLeaf()){
             application = (Application) selected.getData();
        //      System.out.println(application.getUsername().getUsername());

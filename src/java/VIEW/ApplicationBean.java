@@ -1,7 +1,7 @@
 package VIEW;
 
 import CONTROLLER.ApplicationController;
-import CONTROLLER.PositionController;
+import CONTROLLER.RecruitmentController;
 import DAO.Application;
 import DAO.Position;
 import java.io.Serializable;
@@ -63,7 +63,7 @@ public class ApplicationBean implements Serializable
     @Inject
     private ApplicationController applicationController;
     @Inject
-    private PositionController positionController;
+    private RecruitmentController positionController;
     
     public void addApplication(){  
         applicationController.deleteApplicationsByUser(user);

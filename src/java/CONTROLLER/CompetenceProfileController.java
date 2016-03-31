@@ -11,19 +11,14 @@ import javax.inject.Inject;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class CompetenceProfileController
 {
-    @EJB
-    private CompetenceController competenceController;
-    @EJB
-    private UserController userController;
-    
     @Inject
-    private CompetenceProfileModel competenceProfileModel;
+    private CompetenceProfileModel competenceProfileModel;    
+    @Inject
+    private CompetenceModel competenceModel;
 
     @PostConstruct
     public void startup()
-    {
-        System.out.println("Working controller");
-    }
+    {}
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void addCompetenceprofile(String username,String competenceName,String comment)
@@ -37,7 +32,7 @@ public class CompetenceProfileController
         competenceProfileModel.addCompetenceprofile(temp);
     }
     
-     public Competenceprofile getCompetenceprofile(int id)
+    public Competenceprofile getCompetenceprofile(int id)
     {
         return competenceProfileModel.getCompetenceprofile(id);
     }
@@ -50,8 +45,24 @@ public class CompetenceProfileController
     
     public List<Competenceprofile> getAllCompetenceprofilesByUser(String userName)
     {
-       // User user = userController.getUser(userName);
         List<Competenceprofile> result = competenceProfileModel.getAllCompetenceprofilesByUser(userName);
+        return result;
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void addCompetence(String name, String description)
+    {
+        competenceModel.addCompetence(new Competence(name, description));
+    }
+    
+     public Competence getCompetence(String name)
+    {
+        return competenceModel.getCompetence(name);
+    }
+     
+    public List<Competence> getAllCompetences()
+    {
+        List<Competence> result = competenceModel.getAllCompetences();
         return result;
     }
 }

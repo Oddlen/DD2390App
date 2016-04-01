@@ -40,7 +40,10 @@
             <h:panelGroup />
             <h:outputText id="display" />
             
-               <p:commandButton value="Add new postion"  actionListener="#{Recruitment.addPosition}" update="@form" icon="ui-icon-check" />
+               <p:commandButton value="Add new postion"  actionListener="#{Recruitment.addPosition}" update="@form" icon="ui-icon-check"  >
+                     <f:actionListener binding="#{Application.startup()}"/>
+                     <f:actionListener binding="#{applicationhandler.startup()}"/>
+                 </p:commandButton>
         </h:panelGrid>
     </p:panel>
         

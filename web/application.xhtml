@@ -33,7 +33,10 @@
             </p:column>
         
       </p:pickList>  
-        <p:commandButton value="Submit"  actionListener="#{Application.addApplication}" update="status" />
+        <p:commandButton value="Submit"  actionListener="#{Application.addApplication}" update="status"  >
+                     <f:actionListener binding="#{Application.startup()}"/>
+                     <f:actionListener binding="#{applicationhandler.startup()}"/>
+                 </p:commandButton>
 
 
     </h:form>

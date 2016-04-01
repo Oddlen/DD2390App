@@ -5,10 +5,13 @@ import DTO.*;
 import MODEL.ApplicationModel;
 import MODEL.StatusModel;
 import MODEL.UserModel;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.*;
 import javax.inject.Inject;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -54,6 +57,37 @@ public class ApplicationController
         return applicationModel.getInverseApplicationsByUser(user);
     }
     
+    public List<PositionDTO> getUnAppliedPositions(String name){
+        List<PositionDTO> positionList = positionController.getAllPositions();
+        List<ApplicationDTO> applicationsByUser = getApplicationsByUser(name);
+        List<PositionDTO> temp = new ArrayList<>();  
+        
+        for(PositionDTO p : positionList){                  
+            if(appliedTo(p,applicationsByUser)){
+                temp.add(p);
+            }
+        }        
+        ArrayList<PositionDTO> applicationList = new ArrayList<>();  
+        applicationList.addAll(temp);
+        
+        return applicationList;
+    }
+    
+    public List<PositionDTO> getAppliedPositions(String name){
+        List<PositionDTO> positionList = positionController.getAllPositions();
+        List<ApplicationDTO> applicationsByUser = getApplicationsByUser(name);
+        List<PositionDTO> temp = new ArrayList<>();  
+        
+        for(PositionDTO p : positionList){                  
+            if(appliedTo(p,applicationsByUser)){
+                temp.add(p);
+            }
+        }
+        positionList.removeAll(temp);
+        
+        return positionList;
+    }
+      
     public List<ApplicationDTO> getPendingApplicationsByPosition(int positionID)
     {
         Position position = positionController.getPosition(positionID);
@@ -122,4 +156,54 @@ public class ApplicationController
         
         return applicationModel.getApplicationDTO(id);
     }
-}
+    
+    private boolean appliedTo(PositionDTO p,List<ApplicationDTO> applicationsByUser) {
+       for(ApplicationDTO A: applicationsByUser){
+           if(A.getPositionID()==p.getId()){
+               return true;
+           }
+       } 
+       return false;
+    }
+  
+    public TreeNode generateTree(){
+        List<String> companies = positionController.getAllCompanies();
+        
+        DefaultTreeNode root = new DefaultTreeNode("Root", null);
+        
+        for(String c: companies){
+            
+            List<PositionDTO> positions = positionController.getCompanyPositions(c);
+            
+            boolean noApplications = true;
+            for(PositionDTO p: positions){                
+                List<ApplicationDTO> applications = getPendingApplicationsByPosition(p.getId());
+               
+                if(!applications.isEmpty()){
+                    noApplications=false;
+                    break;
+                }
+            }
+            
+            if(noApplications){
+                continue;
+            }
+                
+            TreeNode company = new DefaultTreeNode(c, root);
+
+            for(PositionDTO p: positions){
+                List<ApplicationDTO> applications = getPendingApplicationsByPosition(p.getId());
+                if(applications.isEmpty())
+                    continue;
+                
+                TreeNode position = new DefaultTreeNode(p.getPosition(), company);
+                for(ApplicationDTO a: applications){
+                    TreeNode node = new DefaultTreeNode(a.getId(), position);
+                }
+            }
+        }
+        return root;
+    }
+    
+    }
+

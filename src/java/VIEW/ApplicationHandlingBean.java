@@ -14,9 +14,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.RollbackException;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.DualListModel;
 import org.primefaces.model.TreeNode;
 
 @Named("applicationhandler")
@@ -35,44 +33,8 @@ public class ApplicationHandlingBean implements Serializable
     
     @PostConstruct
     public void startup()
-    {        
-        companies = positionController.getAllCompanies();
-        
-        root = new DefaultTreeNode("Root", null);
-        
-        for(String c: companies){
-            
-            List<PositionDTO> positions = positionController.getCompanyPositions(c);
-            
-            boolean noApplications = true;
-            for(PositionDTO p: positions){                
-                List<ApplicationDTO> applications = applicationController.getPendingApplicationsByPosition(p.getId());
-               
-                if(!applications.isEmpty()){
-                    noApplications=false;
-                    break;
-                }
-            }
-            
-            if(noApplications){
-                continue;
-            }
-                
-            TreeNode company = new DefaultTreeNode(c, root);
-
-            for(PositionDTO p: positions){
-                List<ApplicationDTO> applications = applicationController.getPendingApplicationsByPosition(p.getId());
-                if(applications.isEmpty())
-                    continue;
-                
-                TreeNode position = new DefaultTreeNode(p.getPosition(), company);
-                for(ApplicationDTO a: applications){
-                    TreeNode application1 = new DefaultTreeNode(a.getId(), position);
-                }
-            }
-        }
-        
-        
+    {
+        root = applicationController.generateTree();
     }
 
     @Inject

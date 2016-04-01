@@ -45,12 +45,7 @@ public class RecruitmentController
     {
         return positionModel.getAllPositions();
     }
-    public List<PositionDTO> getUnAppliedPositions(String name){
-        return positionModel.getUnAppliedPositions(name);
-    }
-      public List<PositionDTO> getAppliedPositions(String name){
-        return positionModel.getAppliedPositions(name);
-    }
+
     public List<PositionDTO> getCompanyPositions(String name)
     {
         Company company = getCompany(name);

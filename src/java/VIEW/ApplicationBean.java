@@ -5,7 +5,6 @@ import CONTROLLER.RecruitmentController;
 import DTO.ApplicationDTO;
 import DTO.PositionDTO;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -39,28 +38,11 @@ public class ApplicationBean implements Serializable
     @PostConstruct
     public void startup()
     {        
-        System.out.println("Application bean Working");
-        
-        positionList = positionController.getUnAppliedPositions(user);
-        
-        applicationList = positionController.getAppliedPositions(user);
-        
-        applicationsByUser = applicationController.getApplicationsByUser(user);
-        /*  
-            applicationList = new ArrayList<>();  
-        List<PositionDTO> temp = new ArrayList<>();  
-        
-        for(PositionDTO p : positionList){                  
-            if(appliedTo(p)){
-                temp.add(p);
-            }
-        }
-        positionList.removeAll(temp);
-        applicationList.addAll(temp);
-        */
+        System.out.println("Application bean Working");        
+        positionList = applicationController.getAppliedPositions(user);        
+        applicationList = applicationController.getUnAppliedPositions(user);        
+        applicationsByUser = applicationController.getApplicationsByUser(user);  
         positions = new DualListModel<>(positionList, applicationList);
-      
-
     }
 
     @Inject

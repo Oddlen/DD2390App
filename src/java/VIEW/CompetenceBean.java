@@ -1,8 +1,8 @@
 package VIEW;
 
 import CONTROLLER.CompetenceProfileController;
-import DAO.Competence;
-import DAO.Competenceprofile;
+import DTO.CompetenceDTO;
+import DTO.CompetenceProfileDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -18,8 +18,8 @@ import javax.transaction.RollbackException;
 public class CompetenceBean implements Serializable
 {
 
-    List<Competence> competenceList;
-    List<Competenceprofile> competenceProfile;
+    List<CompetenceDTO> competenceList;
+    List<CompetenceProfileDTO> competenceProfile;
     private String competenceName;
     private String newCompetenceName;
     private String description;
@@ -95,7 +95,7 @@ public class CompetenceBean implements Serializable
         return description;
     }
         
-    public List<Competence> getCompetenceList() {
+    public List<CompetenceDTO> getCompetenceList() {
         return competenceList;
     }
     
@@ -107,7 +107,7 @@ public class CompetenceBean implements Serializable
         this.newCompetenceName = newCompetenceName;
     }
 
-    public void setCompetenceList(List<Competence> CompetenceList) {
+    public void setCompetenceList(List<CompetenceDTO> CompetenceList) {
         this.competenceList = CompetenceList;
     }
     
@@ -135,11 +135,11 @@ public class CompetenceBean implements Serializable
     }
 
     
-    public List<Competenceprofile> getCompetenceProfile() {
+    public List<CompetenceProfileDTO> getCompetenceProfile() {
         return competenceProfile;
     }
 
-    public void setCompetenceProfile(List<Competenceprofile> competenceProfile) {
+    public void setCompetenceProfile(List<CompetenceProfileDTO> competenceProfile) {
         this.competenceProfile = competenceProfile;
     }
 }

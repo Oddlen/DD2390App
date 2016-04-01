@@ -2,8 +2,8 @@ package VIEW;
 
 import CONTROLLER.ApplicationController;
 import CONTROLLER.RecruitmentController;
-import DAO.Application;
-import DAO.Position;
+import DTO.ApplicationDTO;
+import DTO.PositionDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import org.primefaces.model.DualListModel;
 public class ApplicationBean implements Serializable
 {
 
-    private DualListModel<Position> positions;
+    private DualListModel<PositionDTO> positions;
 
 
 
@@ -30,9 +30,9 @@ public class ApplicationBean implements Serializable
     private String position;
     private String description;
 
-    List<Position> positionList;
-    List<Position> applicationList;
-    List<Application> applicationsByUser;
+    List<PositionDTO> positionList;
+    List<PositionDTO> applicationList;
+    List<ApplicationDTO> applicationsByUser;
 
 
         
@@ -45,9 +45,9 @@ public class ApplicationBean implements Serializable
         applicationList = new ArrayList<>();        
         
         applicationsByUser = applicationController.getApplicationsByUser(user);
-        List<Position> temp = new ArrayList<>();  
+        List<PositionDTO> temp = new ArrayList<>();  
         
-        for(Position p : positionList){                  
+        for(PositionDTO p : positionList){                  
             if(appliedTo(p)){
                 temp.add(p);
             }
@@ -76,18 +76,18 @@ public class ApplicationBean implements Serializable
     
   
     public void onSelect(SelectEvent event) { 
-        Position selected = (Position)event.getObject();
+        PositionDTO selected = (PositionDTO)event.getObject();
         description = selected.getDescription();
         if(description.equals(""))
             description = "none";
         positionList = positionController.getAllPositions();
     }
 
-    public DualListModel<Position> getPositions() {
+    public DualListModel<PositionDTO> getPositions() {
         return positions;
     }
 
-    public void setPositions(DualListModel<Position> Applications) {
+    public void setPositions(DualListModel<PositionDTO> Applications) {
         this.positions = Applications;
     }
 
@@ -122,17 +122,18 @@ public class ApplicationBean implements Serializable
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<Application> getApplicationsByUser() {
+    
+    public List<ApplicationDTO> getApplicationsByUser() {
         return applicationsByUser;
     }
 
-    public void setApplicationsByUser(List<Application> applicationsByUser) {
+    public void setApplicationsByUser(List<ApplicationDTO> applicationsByUser) {
         this.applicationsByUser = applicationsByUser;
     }
     
-    private boolean appliedTo(Position p) {
-       for(Application A: applicationsByUser){
-           if(A.getPositionID().getId().equals(p.getId())){
+    private boolean appliedTo(PositionDTO p) {
+       for(ApplicationDTO A: applicationsByUser){
+           if(A.getPositionID()==p.getId()){
                return true;
            }
        } 

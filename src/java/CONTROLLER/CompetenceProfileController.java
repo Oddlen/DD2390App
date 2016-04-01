@@ -1,6 +1,8 @@
 package CONTROLLER;
 
 import DAO.*;
+import DTO.CompetenceDTO;
+import DTO.CompetenceProfileDTO;
 import MODEL.*;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,13 +25,7 @@ public class CompetenceProfileController
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void addCompetenceprofile(String username,String competenceName,String comment)
     {
-        Competenceprofile temp = new Competenceprofile();
-        CompetenceprofilePK tempPK = new CompetenceprofilePK();
-        tempPK.setUsername(username);
-        tempPK.setCompetenceName(competenceName);
-        temp.setCompetenceprofilePK(tempPK);
-        temp.setComment(comment);
-        competenceProfileModel.addCompetenceprofile(temp);
+        competenceProfileModel.addCompetenceprofile(username,competenceName,comment);
     }
     
     public Competenceprofile getCompetenceprofile(int id)
@@ -37,15 +33,15 @@ public class CompetenceProfileController
         return competenceProfileModel.getCompetenceprofile(id);
     }
      
-    public List<Competenceprofile> getAllCompetenceprofiles()
+    public List<CompetenceProfileDTO> getAllCompetenceprofiles()
     {
-        List<Competenceprofile> result = competenceProfileModel.getAllCompetenceprofiles();
+        List<CompetenceProfileDTO> result = competenceProfileModel.getAllCompetenceprofiles();
         return result;
     }
     
-    public List<Competenceprofile> getAllCompetenceprofilesByUser(String userName)
+    public List<CompetenceProfileDTO> getAllCompetenceprofilesByUser(String userName)
     {
-        List<Competenceprofile> result = competenceProfileModel.getAllCompetenceprofilesByUser(userName);
+        List<CompetenceProfileDTO> result = competenceProfileModel.getAllCompetenceprofilesByUser(userName);
         return result;
     }
     
@@ -60,9 +56,9 @@ public class CompetenceProfileController
         return competenceModel.getCompetence(name);
     }
      
-    public List<Competence> getAllCompetences()
+    public List<CompetenceDTO> getAllCompetences()
     {
-        List<Competence> result = competenceModel.getAllCompetences();
+        List<CompetenceDTO> result = competenceModel.getAllCompetences();
         return result;
     }
 }

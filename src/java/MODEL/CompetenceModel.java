@@ -1,6 +1,8 @@
 package MODEL;
 
 import DAO.*;
+import DTO.CompetenceDTO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.*;
 import javax.persistence.*;
@@ -31,11 +33,24 @@ Competence entity = new Competence();
         return competence;
     }
     
-      public List<Competence> getAllCompetences()
+      public List<CompetenceDTO> getAllCompetences()
     {
         List<Competence> results = em.createNamedQuery("Competence.findAll").getResultList();
         System.out.println(results.size()+" this many");
-        return results;
+        return toDTO(results);
     }
+      
+    private CompetenceDTO toDTO(Competence p){
+      return new CompetenceDTO(p.getCompetenceName(),
+                                p.getDescription());
+  }
+
+  private List<CompetenceDTO> toDTO(List<Competence> p){
+      List<CompetenceDTO> response = new ArrayList<>();
+      for(Competence a: p){
+          response.add(toDTO(a));
+       }
+      return response;            
+  }
     
 }

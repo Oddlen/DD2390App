@@ -1,6 +1,7 @@
 package CONTROLLER;
 
 import DAO.*;
+import DTO.PositionDTO;
 import MODEL.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +29,11 @@ public class RecruitmentController
     public void addPosition(String companyName, String position, String description)
     {
         Company company = getCompany(companyName);
-        System.out.println("found compnay");
-        Position pos = new Position();
-        
         assert(company != null);
-        pos.setCompany(company);
-        
         assert(!"".equals(position));
-        pos.setPosition(position);
-        
         if(!"".equals(description))
-            pos.setDescription(description);
         
-        positionModel.addPosition(pos);
+        positionModel.addPosition(company, position, description );
     }
     
     public Position getPosition(int ID)
@@ -48,12 +41,12 @@ public class RecruitmentController
         return positionModel.getPosition(ID);
     }
      
-    public List<Position> getAllPositions()
+    public List<PositionDTO> getAllPositions()
     {
         return positionModel.getAllPositions();
     }
     
-    public List<Position> getCompanyPositions(String name)
+    public List<PositionDTO> getCompanyPositions(String name)
     {
         Company company = getCompany(name);
         return positionModel.getCompanyPositions(company);

@@ -1,6 +1,8 @@
 package MODEL;
 
 import DAO.*;
+import DTO.ApplicationDTO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.*;
 import javax.persistence.*;
@@ -16,33 +18,33 @@ Application entity = new Application();
     private EntityManager em;
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addApplication(Application application)
+    public void addApplication(User user, Position pos, Status stat)
     {
-        em.persist(application);
+        Application app = new Application();
+        app.setUsername(user);        
+        app.setPositionID(pos);
+        app.setStatus(stat);
+        em.persist(app);
         em.flush();
     }
     
-    public Application getApplication(int id)
-    {
-        Application application = em.find(entity.getClass(), id);
-        return application;
-    }
-    
-      public List<Application> getAllApplications()
-    {
-        List<Application> results = em.createNamedQuery("Application.findAll").getResultList();
-        return results;
-    }
-      
-      public List<Application> getApplicationsByUser(User user)
+      public List<ApplicationDTO> getApplicationsByUser(User user)
     {
         List<Application> results = em.createNamedQuery("Application.findByName").setParameter("username", user).getResultList();
-        return results;
+        List<ApplicationDTO> response = new ArrayList<>();
+        for(Application a: results){
+            response.add(toDTO(a));
+        }
+        return response;
     }
-        public List<Application> getApplicationsByPosition(Position position)
+        public List<ApplicationDTO> getApplicationsByPosition(Position position)
     {
         List<Application> results = em.createNamedQuery("Application.findByPositionId").setParameter("positionID", position).getResultList();
-        return results;
+        List<ApplicationDTO> response = new ArrayList<>();
+        for(Application a: results){
+            response.add(toDTO(a));
+        }
+        return response;
     }
       
       public int deleteApplicationsByUser(User user)
@@ -56,10 +58,20 @@ Application entity = new Application();
         em.merge(application);
     }
 
-    public List<Application> getPendingApplicationsByPosition(Status status, Position position) {
+    public List<ApplicationDTO> getPendingApplicationsByPosition(Status status, Position position) {
         
         List<Application> results = em.createNamedQuery("Application.findPendingByPositionId").setParameter("positionID", position).setParameter("status", status).getResultList();
-        return results;
+        List<ApplicationDTO> response = new ArrayList<>();
+        for(Application a: results){
+            response.add(toDTO(a));
+        }
+        return response;
     }
     
+    private ApplicationDTO toDTO(Application a){
+        return new ApplicationDTO(a.getId(),
+                    a.getPositionID().getId(),
+                    a.getStatus().getName(),
+                    a.getUsername().getUsername());
+    }
 }

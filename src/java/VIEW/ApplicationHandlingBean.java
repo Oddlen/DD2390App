@@ -4,9 +4,11 @@ import CONTROLLER.ApplicationController;
 import CONTROLLER.CompetenceProfileController;
 import CONTROLLER.RecruitmentController;
 import DAO.Application;
-import DAO.Company;
 import DAO.Competenceprofile;
 import DAO.Position;
+import DTO.ApplicationDTO;
+import DTO.CompetenceProfileDTO;
+import DTO.PositionDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class ApplicationHandlingBean implements Serializable
     private TreeNode root;  
     private TreeNode selected;
     private Application application;
-    private List<Competenceprofile> competenceProfile;
+    private List<CompetenceProfileDTO> competenceProfile;
 
     
     
@@ -43,11 +45,11 @@ public class ApplicationHandlingBean implements Serializable
         
         for(String c: companies){
             
-            List<Position> positions = positionController.getCompanyPositions(c);
+            List<PositionDTO> positions = positionController.getCompanyPositions(c);
             
             boolean noApplications = true;
-            for(Position p: positions){                
-                List<Application> applications = applicationController.getPendingApplicationsByPosition(p.getId());
+            for(PositionDTO p: positions){                
+                List<ApplicationDTO> applications = applicationController.getPendingApplicationsByPosition(p.getId());
                 
                 if(!applications.isEmpty()){
                     noApplications=false;
@@ -61,13 +63,13 @@ public class ApplicationHandlingBean implements Serializable
                 
             TreeNode company = new DefaultTreeNode(c, root);
 
-            for(Position p: positions){
-                List<Application> applications = applicationController.getPendingApplicationsByPosition(p.getId());
+            for(PositionDTO p: positions){
+                List<ApplicationDTO> applications = applicationController.getPendingApplicationsByPosition(p.getId());
                 if(applications.isEmpty())
                     continue;
                 
                 TreeNode position = new DefaultTreeNode(p.getPosition(), company);
-                for(Application a: applications){
+                for(ApplicationDTO a: applications){
                     TreeNode application = new DefaultTreeNode(a, position);
                 }
             }
@@ -109,16 +111,16 @@ public class ApplicationHandlingBean implements Serializable
        //      System.out.println(application.getUsername().getUsername());
             competenceProfile = competenceProfileController.getAllCompetenceprofilesByUser(application.getUsername().getUsername());
         
-       System.out.println(competenceProfile.get(0).getUser().getUsername());
+       System.out.println(competenceProfile.get(0).getUserName());
         }
         
     }
     
-    public List<Competenceprofile> getCompetenceProfile() {
+    public List<CompetenceProfileDTO> getCompetenceProfile() {
         return competenceProfile;
     }
 
-    public void setCompetenceProfile(List<Competenceprofile> competenceProfile) {
+    public void setCompetenceProfile(List<CompetenceProfileDTO> competenceProfile) {
         this.competenceProfile = competenceProfile;
     }
     

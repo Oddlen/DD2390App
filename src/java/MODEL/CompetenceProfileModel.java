@@ -1,6 +1,8 @@
 package MODEL;
 
 import DAO.*;
+import DTO.CompetenceProfileDTO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.*;
 import javax.persistence.*;
@@ -16,8 +18,15 @@ Competenceprofile entity = new Competenceprofile();
     private EntityManager em;
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void addCompetenceprofile(Competenceprofile competenceprofile)
+    public void addCompetenceprofile(String username,String competenceName,String comment)
     {
+        Competenceprofile competenceprofile = new Competenceprofile();
+        CompetenceprofilePK competenceprofilePK = new CompetenceprofilePK();
+        competenceprofilePK.setUsername(username);
+        competenceprofilePK.setCompetenceName(competenceName);
+        competenceprofile.setCompetenceprofilePK(competenceprofilePK);
+        competenceprofile.setComment(comment);
+        
         em.persist(competenceprofile);
         em.flush();
     }
@@ -28,16 +37,31 @@ Competenceprofile entity = new Competenceprofile();
         return competenceprofile;
     }
     
-    public List<Competenceprofile> getAllCompetenceprofiles()
+    public List<CompetenceProfileDTO> getAllCompetenceprofiles()
     {
         List<Competenceprofile> results = em.createNamedQuery("Competenceprofile.findAll").getResultList();
-        return results;
+        return toDTO(results);
     }
     
-    public List<Competenceprofile> getAllCompetenceprofilesByUser(String user)
+    public List<CompetenceProfileDTO> getAllCompetenceprofilesByUser(String user)
     {   
         List<Competenceprofile> results = em.createNamedQuery("Competenceprofile.findByUsername").setParameter("username", user).getResultList();
-        return results;
+        return toDTO(results);
     }
     
+    
+    private CompetenceProfileDTO toDTO(Competenceprofile p){
+        return new CompetenceProfileDTO(p.getUser().getUsername(),
+                                        p.getCompetence().getCompetenceName(),
+                                        p.getCompetence().getDescription(),
+                                        p.getComment());
+    }
+
+    private List<CompetenceProfileDTO> toDTO(List<Competenceprofile> p){
+        List<CompetenceProfileDTO> response = new ArrayList<>();
+        for(Competenceprofile a: p){
+            response.add(toDTO(a));
+         }
+        return response;            
+    }
 }

@@ -72,7 +72,18 @@ Application entity = new Application();
         return new ApplicationDTO(a.getId(),
                     a.getPositionID().getId(),
                     a.getPositionID().getPosition(),
+                    a.getPositionID().getCompany().getName(),
                     a.getStatus().getName(),
                     a.getUsername().getUsername());
+    }
+
+    public Application getApplication(int id) {
+         Application application = em.find(entity.getClass(), id);
+        return application;
+    }
+
+    public ApplicationDTO getApplicationDTO(int id) {
+        Application application = em.find(entity.getClass(), id);
+        return toDTO(application);
     }
 }

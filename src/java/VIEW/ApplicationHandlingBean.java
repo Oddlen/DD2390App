@@ -3,9 +3,6 @@ package VIEW;
 import CONTROLLER.ApplicationController;
 import CONTROLLER.CompetenceProfileController;
 import CONTROLLER.RecruitmentController;
-import DAO.Application;
-import DAO.Competenceprofile;
-import DAO.Position;
 import DTO.ApplicationDTO;
 import DTO.CompetenceProfileDTO;
 import DTO.PositionDTO;
@@ -30,7 +27,7 @@ public class ApplicationHandlingBean implements Serializable
     List<String> companies;
     private TreeNode root;  
     private TreeNode selected;
-    private Application application;
+    private ApplicationDTO application;
     private List<CompetenceProfileDTO> competenceProfile;
 
     
@@ -50,7 +47,7 @@ public class ApplicationHandlingBean implements Serializable
             boolean noApplications = true;
             for(PositionDTO p: positions){                
                 List<ApplicationDTO> applications = applicationController.getPendingApplicationsByPosition(p.getId());
-                
+               
                 if(!applications.isEmpty()){
                     noApplications=false;
                     break;
@@ -70,7 +67,7 @@ public class ApplicationHandlingBean implements Serializable
                 
                 TreeNode position = new DefaultTreeNode(p.getPosition(), company);
                 for(ApplicationDTO a: applications){
-                    TreeNode application = new DefaultTreeNode(a, position);
+                    TreeNode application1 = new DefaultTreeNode(a.getId(), position);
                 }
             }
         }
@@ -94,11 +91,11 @@ public class ApplicationHandlingBean implements Serializable
         return selected;
     }
     
-    public void setApplication(Application  application){
+    public void setApplication(ApplicationDTO  application){
         this.application = application;        
     }
     
-    public Application getApplication(){
+    public ApplicationDTO getApplication(){
         return application;
     }
     public TreeNode getRoot() {
@@ -107,10 +104,10 @@ public class ApplicationHandlingBean implements Serializable
      
     public void onNodeSelect(){
         if(selected.isLeaf()){
-            application = (Application) selected.getData();
-       //      System.out.println(application.getUsername().getUsername());
-            competenceProfile = competenceProfileController.getAllCompetenceprofilesByUser(application.getUsername().getUsername());
-        
+            int id= (int) selected.getData();
+            application = applicationController.getApplicationDTO(id);
+            competenceProfile = competenceProfileController.getAllCompetenceprofilesByUser(application.getUsername());
+            
        System.out.println(competenceProfile.get(0).getUserName());
         }
         

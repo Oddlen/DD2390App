@@ -62,14 +62,17 @@ public class ApplicationController
         return applicationModel.deleteApplicationsByUser(user);
     }
 
-    public void accept(Application application) {
+    public void accept(ApplicationDTO application) {
         Status status = getStatus("Accepted");
-        applicationModel.setStatus(application, status);
+        Application app = getApplication(application.getId());
+        applicationModel.setStatus(app, status);
     }
 
-    public void reject(Application application) {
+    public void reject(ApplicationDTO application) {
         Status status = getStatus("Rejected");
-        applicationModel.setStatus(application, status);
+        
+        Application app = getApplication(application.getId());
+        applicationModel.setStatus(app, status);
     }
     
     private Status getStatus(String name)
@@ -104,5 +107,14 @@ public class ApplicationController
     public User getUser(String username){
         return userModel.getUser(username);
         
+    }
+
+    private Application getApplication(int id) {
+        return applicationModel.getApplication(id);
+    }
+
+    public ApplicationDTO getApplicationDTO(int id) {
+        
+        return applicationModel.getApplicationDTO(id);
     }
 }

@@ -16,7 +16,7 @@
                 <p:tree value="#{applicationhandler.root}" var="node" dynamic="true" selectionMode="single" selection="#{applicationhandler.selected}" >
                       <p:ajax event="select" update="form" listener="#{applicationhandler.onNodeSelect}" />
                     <p:treeNode>
-                        <h:outputText value="#{node}" />
+                        <h:outputText value="#{node}"  />
                     </p:treeNode>
                  </p:tree>
 
@@ -28,7 +28,7 @@
                        <h:outputText value=" Competence profile" />
                     </f:facet>
                     <p:column headerText="Competence">
-                        <h:outputText value="#{comp.competenceprofilePK.competenceName}" />
+                        <h:outputText value="#{comp.competence}" />
                     </p:column>
 
                     <p:column headerText="Description">
@@ -36,8 +36,8 @@
                     </p:column>
                 </p:dataTable>
 
-                 <p:commandButton value="Accept"  actionListener="#{applicationhandler.accept}" update="@form" icon="ui-icon-check" />
-                 <p:commandButton value="Reject"  actionListener="#{applicationhandler.reject}" update="@form" icon="ui-icon-check" />
+                 <p:commandButton value="Accept"  actionListener="#{applicationhandler.accept}" update="form" icon="ui-icon-check" />
+                 <p:commandButton value="Reject"  actionListener="#{applicationhandler.reject}" update="form" icon="ui-icon-check" />
             </panel>
     </h:form>
     </h:body>

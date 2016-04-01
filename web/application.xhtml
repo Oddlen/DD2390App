@@ -20,11 +20,12 @@
         showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" 
         itemLabel="#{item.position}"  itemValue="#{item}" >
         <p:ajax event="select" listener="#{Application.onSelect}" update="desc" />
+        
         <f:facet name="sourceCaption"> Company  -  Position </f:facet>
         <f:facet name="targetCaption"> Company  -  Position </f:facet>
         
             <p:column style="width:50%">
-                <h:outputText value="#{item.company.name}"  />
+                <h:outputText value="#{item.company}"  />
             </p:column>
  
             <p:column style="width:50%;">
@@ -49,15 +50,15 @@
            Status of applications
         </f:facet>
             <p:column headerText="Company">
-                <h:outputText value="#{appl.positionID.company.name}" />
+                <h:outputText value="#{appl.company}" />
             </p:column>
 
             <p:column headerText="Position">
-                <h:outputText value="#{appl.positionID.position}" />
+                <h:outputText value="#{appl.position}" />
             </p:column>
 
             <p:column headerText="Status">
-                <h:outputText value="#{appl.status.name}" />
+                <h:outputText value="#{appl.status}" />
             </p:column>
         </p:dataTable>
     </p:column>

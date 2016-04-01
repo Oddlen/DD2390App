@@ -27,9 +27,11 @@ Competenceprofile entity = new Competenceprofile();
         competenceprofile.setCompetenceprofilePK(competenceprofilePK);
         competenceprofile.setComment(comment);
         
+        
         em.persist(competenceprofile);
         em.flush();
-    }
+        
+    } 
     
     public Competenceprofile getCompetenceprofile(int ID)
     {
@@ -43,18 +45,22 @@ Competenceprofile entity = new Competenceprofile();
         return toDTO(results);
     }
     
+    
     public List<CompetenceProfileDTO> getAllCompetenceprofilesByUser(String user)
     {   
         List<Competenceprofile> results = em.createNamedQuery("Competenceprofile.findByUsername").setParameter("username", user).getResultList();
+        System.out.println(results.size() + " items from database");
+        
         return toDTO(results);
     }
     
     
     private CompetenceProfileDTO toDTO(Competenceprofile p){
-        return new CompetenceProfileDTO(p.getUser().getUsername(),
-                                        p.getCompetence().getCompetenceName(),
-                                        p.getCompetence().getDescription(),
-                                        p.getComment());
+        String username = p.getCompetenceprofilePK().getUsername();
+        String competence = p.getCompetenceprofilePK().getCompetenceName();
+        String comment=  p.getComment();
+        
+        return new CompetenceProfileDTO(username,competence,"",comment);
     }
 
     private List<CompetenceProfileDTO> toDTO(List<Competenceprofile> p){

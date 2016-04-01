@@ -25,7 +25,7 @@ public class CompetenceProfileController
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void addCompetenceprofile(String username,String competenceName,String comment)
     {
-        competenceProfileModel.addCompetenceprofile(username,competenceName,comment);
+         competenceProfileModel.addCompetenceprofile(username,competenceName,comment);
     }
     
     public Competenceprofile getCompetenceprofile(int id)

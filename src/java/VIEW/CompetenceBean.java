@@ -80,6 +80,7 @@ public class CompetenceBean implements Serializable
         FacesContext.getCurrentInstance().addMessage(null, msg); 
         
         competenceProfile = competenceProfileController.getAllCompetenceprofilesByUser(username);
+        //startup();
     }
   
     public void onCompetenceChange(){

@@ -13,12 +13,14 @@ public class ApplicationDTO {
 
     private int id;
     private int positionID;
+    private String position;
     private String status;
     private String username;
     
-    public ApplicationDTO(int id, int positionID, String status, String username){
+    public ApplicationDTO(int id, int positionID, String Position, String status, String username){
         this.id =id;
         this.positionID = positionID;
+        this.position = position;
         this.status = status;
         this.username = username;
     }
@@ -39,6 +41,14 @@ public class ApplicationDTO {
         this.positionID = positionID;
     }
 
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+    
     public String getStatus() {
         return status;
     }

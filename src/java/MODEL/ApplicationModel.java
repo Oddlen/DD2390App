@@ -71,6 +71,7 @@ Application entity = new Application();
     private ApplicationDTO toDTO(Application a){
         return new ApplicationDTO(a.getId(),
                     a.getPositionID().getId(),
+                    a.getPositionID().getPosition(),
                     a.getStatus().getName(),
                     a.getUsername().getUsername());
     }

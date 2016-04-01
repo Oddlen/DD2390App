@@ -37,6 +37,15 @@ Application entity = new Application();
         }
         return response;
     }
+        public List<ApplicationDTO> getInverseApplicationsByUser(User user)
+    {
+        List<Application> results = em.createNamedQuery("Application.inverseFindByName").setParameter("username", user).getResultList();
+        List<ApplicationDTO> response = new ArrayList<>();
+        for(Application a: results){
+            response.add(toDTO(a));
+        }
+        return response;
+    }
         public List<ApplicationDTO> getApplicationsByPosition(Position position)
     {
         List<Application> results = em.createNamedQuery("Application.findByPositionId").setParameter("positionID", position).getResultList();

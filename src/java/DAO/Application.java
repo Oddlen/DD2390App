@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Application.findByPositionId", query = "SELECT a FROM Application a WHERE a.positionID = :positionID"),
     @NamedQuery(name = "Application.findPendingByPositionId", query = "SELECT a FROM Application a WHERE a.positionID = :positionID AND a.status = :status"),
     @NamedQuery(name = "Application.findByName", query = "SELECT a FROM Application a WHERE a.username = :username"),
+    @NamedQuery(name = "Application.inverseFindByName", query = "SELECT a FROM Application a WHERE a.username != :username"),
     @NamedQuery(name = "Application.deleteByName", query = "DELETE FROM Application a WHERE a.username = :username")})
 public class Application implements Serializable {
     private static final long serialVersionUID = 1L;

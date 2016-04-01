@@ -48,6 +48,11 @@ public class ApplicationController
         User user = getUser(userName);
         return applicationModel.getApplicationsByUser(user);
     }
+        public List<ApplicationDTO> getInverseApplicationsByUser(String userName)
+    {
+        User user = getUser(userName);
+        return applicationModel.getInverseApplicationsByUser(user);
+    }
     
     public List<ApplicationDTO> getPendingApplicationsByPosition(int positionID)
     {

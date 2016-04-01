@@ -41,10 +41,13 @@ public class ApplicationBean implements Serializable
     {        
         System.out.println("Application bean Working");
         
-        positionList = positionController.getAllPositions();
-        applicationList = new ArrayList<>();        
+        positionList = positionController.getUnAppliedPositions(user);
+        
+        applicationList = positionController.getAppliedPositions(user);
         
         applicationsByUser = applicationController.getApplicationsByUser(user);
+        /*  
+            applicationList = new ArrayList<>();  
         List<PositionDTO> temp = new ArrayList<>();  
         
         for(PositionDTO p : positionList){                  
@@ -54,7 +57,7 @@ public class ApplicationBean implements Serializable
         }
         positionList.removeAll(temp);
         applicationList.addAll(temp);
-        
+        */
         positions = new DualListModel<>(positionList, applicationList);
       
 
